@@ -4,17 +4,33 @@ import sqlite3
 from tkinter import *
 from functools import partial
 
-def quit_(a):
-    a.destroy()
+
+def _save_quit(a, b):
+    # DB 연결
+    # TestDB 대신에 Entry를 사용하여 사용자 입력으로 DB이름을 입력
+    # 입력받은 값으로 connect하여 DB 생성할 예정
+    print(b)
+    #con = sqlite3.connect("TestDB")
+    #cur = con.cursor()
+    #con.commit()
+    #con.close()
+
+    a.destroy()  # 새로 열린 이 창만 닫기
+
 
 def create_db():
     root = Tk()
     root.title("DB생성창")
     root.geometry("300x300")
-    # savebtn = Button(root, text='save', command=root.destroy).pack()
-    arg = root,
-    quit_arg = partial(quit_, arg)
-    savebtn = Button(root, text='save', command=quit_arg).pack()
+
+    # Entry 만들어서 DB이름 받고 그 값을 함수로 넘겨줄 것
+    test = StringVar()
+    label1 = Label(root, text='DB이름').pack(side=LEFT)
+    textbox = Entry(root, textvariable=test).pack(side=LEFT)
+    test = test.set('default')
+    save_quit_arg = partial(_save_quit, root, test)
+    savebtn = Button(root, text='save', command=save_quit_arg).pack(side=BOTTOM)
+
 
     root.mainloop()
 
@@ -53,14 +69,9 @@ cur.execute("Create TABLE Customer")
 con.commit()
 con.close()
 
-def create_table():
-    pass
 
-
-def delete_table():
-    pass
-
-
-def alter_table():
-    pass
+예제
+cur.execute("CREATE TABLE kuk(id char(4), password int(4))")
+    cur.execute("INSERT INTO kuk VALUES('john', 123)")
+    cur.execute("INSERT INTO kuk VALUES('conn', 321)")
 '''
